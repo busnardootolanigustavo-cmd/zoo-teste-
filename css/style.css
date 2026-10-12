@@ -1,0 +1,1940 @@
+/* ==========================================================================
+   ZOO AMERICANA — REDESIGN EDITORIAL
+   Parque Ecológico Municipal "Engenheiro Cid Almeida Franco"
+   ========================================================================== */
+
+:root {
+  --paper: #f4ede1;
+  --paper-card: #fdfaf4;
+  --paper-tint: #eae0cf;
+  --ink: #181512;
+  --ink-light: #443e37;
+  --onca-gold: #dba04a;
+  --rust: #be421b;
+  --forest: #173827;
+  --forest-light: #23523a;
+  --caution-yellow: #f2c230;
+
+  --f-display: 'Anton', Impact, 'Arial Black', sans-serif;
+  --f-serif: 'Fraunces', Georgia, serif;
+  --f-sans: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --border-thick: 2.5px solid var(--ink);
+  --border-thin: 1.5px solid var(--ink);
+  --shadow-solid: 6px 6px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --shadow-lg: 10px 10px 0 var(--ink);
+
+  --max-w: 1320px;
+  --gutter: 32px;
+  --radius: 0px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  font-family: var(--f-sans);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--paper);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Textura sutil de grão de papel no fundo geral */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .08  0 0 0 0 .06  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--onca-gold);
+}
+
+/* ==========================================================================
+   COMPONENTES GERAIS / BOTÕES
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: var(--border-thick);
+  background: var(--paper-card);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-solid);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper-card);
+  box-shadow: 4px 4px 0 var(--rust);
+}
+
+.btn--ink:hover {
+  box-shadow: 6px 6px 0 var(--rust);
+  background: #25201b;
+}
+
+.btn--paper {
+  background: var(--paper-card);
+}
+
+.btn--sm {
+  padding: 9px 18px;
+  font-size: 13.5px;
+}
+
+.btn--lg {
+  padding: 16px 30px;
+  font-size: 16px;
+}
+
+.btn__arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   TOPBAR & HEADER
+   ========================================================================== */
+.topbar {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: var(--border-thin);
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+}
+
+.marquee span, .marquee i {
+  padding: 9px 0;
+}
+
+.marquee i {
+  font-style: normal;
+  color: var(--onca-gold);
+  padding-inline: 22px;
+}
+
+@keyframes marquee-scroll {
+  to { transform: translateX(-50%); }
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(244, 237, 225, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: var(--border-thick);
+}
+
+.header__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 14px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo__swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: var(--border-thick);
+  background-color: var(--onca-gold);
+  background-image: var(--tex-onca);
+  background-size: 120px;
+  background-position: center;
+  flex: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.3s ease;
+}
+
+.logo:hover .logo__swatch {
+  transform: rotate(30deg) scale(1.05);
+}
+
+.logo__brand b {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.logo__brand small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-light);
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav a:not(.btn) {
+  font-size: 15px;
+  font-weight: 700;
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav a:not(.btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 3px;
+  background: var(--rust);
+  transition: right 0.25s ease;
+}
+
+.nav a:not(.btn):hover::after {
+  right: 0;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 3px;
+  background: var(--ink);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle em {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 56px var(--gutter) 80px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 52px;
+  align-items: center;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pill-tag {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--border-thin);
+}
+
+.pill-address {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-light);
+  letter-spacing: 0.04em;
+}
+
+.hero__title {
+  margin-bottom: 24px;
+}
+
+.l-small {
+  display: block;
+  font-family: var(--f-sans);
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rust);
+}
+
+.l-big {
+  display: block;
+  font-family: var(--f-display);
+  font-size: clamp(62px, 8.5vw, 126px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 6px 0;
+}
+
+.l-italic {
+  display: block;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 54px);
+  line-height: 1.05;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.hero__lead {
+  font-size: 18.5px;
+  line-height: 1.6;
+  color: var(--ink-light);
+  max-width: 50ch;
+  margin-bottom: 32px;
+}
+
+.hero__lead strong {
+  color: var(--ink);
+}
+
+.hero__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.hero__specs {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 24px;
+  border-top: var(--border-thin);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-num {
+  font-family: var(--f-display);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.spec-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-light);
+}
+
+.spec-divider {
+  width: 2px;
+  height: 38px;
+  background: var(--ink);
+  opacity: 0.3;
+}
+
+/* Lado Visual do Hero */
+.hero__visual {
+  position: relative;
+  min-height: 720px;
+}
+
+/* Fundo ornamental com padrão 2D */
+.hero__pattern-backdrop {
+  position: absolute;
+  inset: 0 0 120px 40px;
+  border: var(--border-thick);
+  background-color: #d9781f;
+  background-image: var(--tex-tigre);
+  background-size: 260px;
+  box-shadow: var(--shadow-solid);
+}
+
+/* Cartão com a foto real em primeiro plano */
+.hero__photo-card {
+  position: absolute;
+  inset: 24px 34px 180px 10px;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-solid);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.hero__photo-card:hover {
+  transform: translateY(-4px);
+}
+
+.hero__photo-wrap {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: #333;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero__photo-card:hover .hero__photo {
+  transform: scale(1.04);
+}
+
+.hero__photo-label {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(24, 21, 18, 0.92);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #3cba54;
+  box-shadow: 0 0 0 3px rgba(60, 186, 84, 0.35);
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  50% { box-shadow: 0 0 0 6px rgba(60, 186, 84, 0); }
+}
+
+/* Fita ornamental de textura no canto da foto */
+.ribbon-swatch {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: var(--border-thick);
+  background-color: var(--onca-gold);
+  background-image: var(--tex-onca);
+  background-size: 110px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.hero__photo-caption {
+  padding: 14px 18px;
+  border-top: var(--border-thin);
+  background: var(--paper-card);
+  font-size: 13.5px;
+  color: var(--ink-light);
+}
+
+.hero__photo-caption strong {
+  color: var(--ink);
+}
+
+/* Fita zebrada/cautela diagonal */
+.deco-tape {
+  position: absolute;
+  top: 48px;
+  left: -24px;
+  right: -24px;
+  padding: 8px 0;
+  background: var(--caution-yellow);
+  border-block: var(--border-thick);
+  transform: rotate(-6deg);
+  z-index: 3;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--f-display);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+
+.deco-tape span {
+  display: inline-block;
+  padding-left: 20px;
+}
+
+/* Carimbo circular */
+.stamp-badge {
+  position: absolute;
+  top: -24px;
+  right: -16px;
+  width: 140px;
+  height: 140px;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+  z-index: 4;
+  transform: rotate(6deg);
+}
+
+.stamp-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin-clockwise 28s linear infinite;
+}
+
+.stamp-svg text {
+  font-family: var(--f-sans);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  fill: var(--ink);
+  text-transform: uppercase;
+}
+
+.stamp-inner {
+  text-align: center;
+}
+
+.stamp-inner b {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 44px;
+  line-height: 0.85;
+}
+
+.stamp-inner small {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@keyframes spin-clockwise {
+  to { transform: rotate(360deg); }
+}
+
+/* Widget do Bilhete / Status */
+.ticket-widget {
+  position: absolute;
+  left: -10px;
+  bottom: 0;
+  width: min(390px, 94%);
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-solid);
+  padding: 18px 20px 14px;
+  z-index: 5;
+  transform: rotate(-1.5deg);
+}
+
+.ticket__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ticket__date {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--ink-light);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-display);
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.status-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: #3c9a48;
+}
+
+[data-estado="aberto"] .status-dot {
+  background: #3c9a48;
+  animation: pulse-dot 1.5s infinite;
+}
+
+[data-estado="quase"] .status-dot {
+  background: var(--caution-yellow);
+}
+
+[data-estado="fechado"] .status-dot {
+  background: var(--rust);
+}
+
+.ticket__hint {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 12px;
+}
+
+.ticket__times {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr;
+  gap: 10px;
+  padding-block: 10px;
+  border-block: 1.5px dashed rgba(24, 21, 18, 0.35);
+}
+
+.ticket__times span {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-light);
+}
+
+.ticket__times strong {
+  display: block;
+  font-size: 13px;
+}
+
+.ticket__bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-light);
+}
+
+/* ==========================================================================
+   FAIXA ORNAMENTAL CONTÍNUA (ZEBRA TEXTURE TRACK)
+   ========================================================================== */
+.pattern-ribbon {
+  overflow: hidden;
+  padding: 22px 0;
+  border-block: var(--border-thick);
+  background-color: #eee9dd;
+  background-image: var(--tex-zebra);
+  background-size: 260px;
+}
+
+.pattern-ribbon__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 55s linear infinite;
+  align-items: center;
+}
+
+.pattern-ribbon__track span {
+  display: inline-block;
+  padding: 6px 18px;
+  background: var(--ink);
+  color: var(--paper-card);
+  font-family: var(--f-display);
+  font-size: clamp(24px, 3.2vw, 42px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.pattern-ribbon__track span:nth-child(even) {
+  background: var(--paper-card);
+  color: var(--ink);
+  border: var(--border-thin);
+}
+
+.pattern-ribbon__track i {
+  font-style: normal;
+  padding-inline: 18px;
+  color: var(--onca-gold);
+  font-size: 24px;
+}
+
+/* ==========================================================================
+   SEÇÕES GERAIS
+   ========================================================================== */
+.sec {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 104px var(--gutter);
+}
+
+.sec--tight {
+  padding-top: 40px;
+}
+
+.sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: var(--border-thick);
+}
+
+.sec-head__title {
+  flex: 1 1 540px;
+}
+
+.sec-index {
+  display: block;
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rust);
+}
+
+.sec-index--light {
+  color: var(--onca-gold);
+}
+
+.sec-head h2 {
+  font-family: var(--f-display);
+  font-size: clamp(48px, 6.5vw, 92px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+}
+
+.sec-head__desc {
+  flex: 1 1 380px;
+  max-width: 520px;
+  font-size: 15.5px;
+  color: var(--ink-light);
+  line-height: 1.6;
+}
+
+/* Barra de Filtros */
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 38px;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--paper-card);
+  border: var(--border-thin);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-count {
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--paper-tint);
+  color: var(--ink);
+}
+
+.filter-btn:hover {
+  background: var(--paper-tint);
+  transform: translateY(-2px);
+}
+
+.filter-btn.is-active {
+  background: var(--ink);
+  color: var(--paper-card);
+  border-color: var(--ink);
+}
+
+.filter-btn.is-active .filter-count {
+  background: var(--onca-gold);
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   CARDS DE ANIMAIS: FOTOS REAIS EM DESTAQUE + ORNAMENTOS DE TEXTURA 2D
+   ========================================================================== */
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 30px;
+  align-items: stretch;
+}
+
+.animal-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.animal-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-solid);
+}
+
+.animal-card.is-hidden {
+  display: none !important;
+}
+
+/* Card Destacado (Onça) */
+.animal-card--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.animal-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #2a2622;
+  border-bottom: var(--border-thick);
+  cursor: pointer;
+}
+
+.animal-card--featured .animal-card__media {
+  aspect-ratio: 16 / 10;
+}
+
+.animal-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.animal-card:hover .animal-card__img {
+  transform: scale(1.05);
+}
+
+/* Badge de Conservação IUCN */
+.status-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(253, 250, 244, 0.96);
+  border: var(--border-thin);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.status-badge--lc { border-left: 6px solid #48b753; }
+.status-badge--nt { border-left: 6px solid #b7cc22; }
+.status-badge--vu { border-left: 6px solid #f1c40f; }
+.status-badge--en { border-left: 6px solid #e67e22; }
+
+/* Ornamento de textura 2D como detalhe de assinatura gráfica */
+.skin-ornament {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 6px;
+  background: rgba(24, 21, 18, 0.9);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 2px 2px 0 var(--ink);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.skin-ornament__preview {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  background-color: var(--onca-gold);
+  background-image: var(--swatch-tex);
+  background-size: 60px;
+  flex: none;
+}
+
+.skin-ornament__name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Informações do Animal */
+.animal-card__info {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.animal-card__meta {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rust);
+  margin-bottom: 6px;
+}
+
+.animal-name {
+  font-family: var(--f-display);
+  font-size: 32px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.animal-card--featured .animal-name {
+  font-size: clamp(38px, 4.2vw, 56px);
+}
+
+.animal-sci {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-light);
+  margin: 4px 0 14px;
+}
+
+.animal-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-light);
+  margin-bottom: 16px;
+}
+
+.animal-card--featured .animal-desc {
+  font-size: 16.5px;
+  max-width: 65ch;
+}
+
+.animal-facts {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1.5px dashed rgba(24, 21, 18, 0.25);
+  font-size: 13px;
+  color: var(--ink-light);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.animal-facts strong {
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   GALERIA DE FLAGRANTES (FOTOS REAIS COM PASSEPARTOUT EM TEXTURA 2D)
+   ========================================================================== */
+.sec--gallery {
+  background: var(--paper-tint);
+  border-block: var(--border-thick);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.gallery-item {
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-solid);
+}
+
+.gallery-item--wide {
+  grid-column: span 2;
+}
+
+/* Moldura que usa textura 2D como passepartout decorativo */
+.gallery-item__frame {
+  position: relative;
+  padding: 14px;
+  background-color: #baa284;
+  background-image: var(--frame-pattern);
+  background-size: 180px;
+  border-bottom: var(--border-thick);
+}
+
+.gallery-item__frame img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border: var(--border-thin);
+  transition: transform 0.4s ease;
+}
+
+.gallery-item--wide .gallery-item__frame img {
+  height: 380px;
+}
+
+.gallery-item:hover .gallery-item__frame img {
+  transform: scale(1.02);
+}
+
+.gallery-item figcaption {
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-light);
+}
+
+.gallery-item figcaption strong {
+  color: var(--ink);
+  display: inline;
+}
+
+/* ==========================================================================
+   BASTIDORES & BEM-ESTAR ANIMAL
+   ========================================================================== */
+.bastidores {
+  background: var(--forest);
+  color: var(--paper);
+  border-block: var(--border-thick);
+}
+
+.bastidores__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 100px var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.bastidores__visual {
+  position: relative;
+}
+
+.bastidores__photo-stack {
+  position: relative;
+  border: var(--border-thick);
+  background: #000;
+  box-shadow: var(--shadow-solid);
+  overflow: hidden;
+}
+
+.bastidores__main-photo {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  display: block;
+}
+
+.bastidores__swatch-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background-color: #27221e;
+  background-image: var(--tex-onca-preta);
+  background-size: 160px;
+  border-left: var(--border-thick);
+  border-bottom: var(--border-thick);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.bastidores__badge {
+  position: absolute;
+  bottom: -24px;
+  left: 24px;
+  right: 24px;
+  background: var(--paper-card);
+  color: var(--ink);
+  border: var(--border-thick);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.bastidores__badge b {
+  font-family: var(--f-display);
+  font-size: 22px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.bastidores__badge p {
+  font-size: 13.5px;
+  color: var(--ink-light);
+  line-height: 1.4;
+}
+
+.bastidores__content h2 {
+  font-family: var(--f-display);
+  font-size: clamp(42px, 5.5vw, 78px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 8px 0 24px;
+  color: #fff;
+}
+
+.bastidores__lead {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  color: rgba(244, 237, 225, 0.9);
+}
+
+.enrichment-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0 34px;
+}
+
+.enrich-box {
+  background: var(--forest-light);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  padding: 18px 20px;
+}
+
+.enrich-box__icon {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.enrich-box h4 {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--onca-gold);
+}
+
+.enrich-box p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(244, 237, 225, 0.85);
+}
+
+.bastidores__quote {
+  border-left: 4px solid var(--onca-gold);
+  padding-left: 20px;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.35;
+  color: var(--onca-gold);
+}
+
+/* ==========================================================================
+   SEÇÃO VISITA (INFORMAÇÕES PRÁTICAS)
+   ========================================================================== */
+.visit-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.visit-card {
+  background: var(--paper-card);
+  border: var(--border-thick);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.visit-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: var(--border-thin);
+}
+
+.visit-card__header h3 {
+  font-family: var(--f-display);
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mini-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: var(--border-thin);
+  background-color: var(--onca-gold);
+  background-image: var(--swatch-tex);
+  background-size: 80px;
+}
+
+/* Tabela de horários */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.schedule-table th, .schedule-table td {
+  padding: 10px 6px;
+  border-bottom: 1.5px dashed rgba(24, 21, 18, 0.25);
+  font-size: 14.5px;
+  text-align: left;
+}
+
+.schedule-table td {
+  text-align: right;
+  font-weight: 600;
+}
+
+.schedule-table tr.is-closed td {
+  color: var(--rust);
+}
+
+.schedule-table tr.is-today {
+  background: var(--caution-yellow);
+}
+
+.schedule-table tr.is-today th::after {
+  content: "HOJE";
+  margin-left: 8px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: var(--ink);
+  color: var(--caution-yellow);
+}
+
+.visit-note {
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-light);
+}
+
+/* Lista de Preços */
+.prices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.prices-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1.5px dashed rgba(24, 21, 18, 0.25);
+}
+
+.prices-list strong {
+  display: block;
+  font-size: 15.5px;
+}
+
+.prices-list span {
+  font-size: 12.5px;
+  color: var(--ink-light);
+}
+
+.price-val {
+  font-family: var(--f-display);
+  font-size: 32px;
+  flex: none;
+  color: var(--ink);
+}
+
+.price-val--free {
+  color: var(--forest);
+}
+
+/* Mapa */
+.visit-card--map {
+  padding: 0;
+  overflow: hidden;
+}
+
+.map-frame {
+  width: 100%;
+  flex: 1;
+  min-height: 280px;
+  border: 0;
+  border-bottom: var(--border-thick);
+}
+
+.map-details {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--paper-card);
+}
+
+.map-details address {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Dicas de visita */
+.tips-grid {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.tip-card {
+  background: var(--paper-card);
+  border: var(--border-thick);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tip-num {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--rust);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tip-card h4 {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.tip-card p {
+  font-size: 14px;
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   SEÇÃO ESCOLAS & BANNER PEDAGÓGICO
+   ========================================================================== */
+.school-banner {
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-solid);
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+}
+
+.school-banner__content {
+  padding: 48px 48px 52px;
+}
+
+.school-banner__content h2 {
+  font-family: var(--f-display);
+  font-size: clamp(38px, 4.8vw, 68px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin: 6px 0 18px;
+}
+
+.school-topics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0 32px;
+  padding-block: 18px;
+  border-block: var(--border-thin);
+}
+
+.school-topics strong {
+  display: block;
+  font-size: 14px;
+  color: var(--rust);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.school-topics p {
+  font-size: 13.5px;
+  color: var(--ink-light);
+  line-height: 1.45;
+}
+
+.school-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.school-callout {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.school-banner__visual {
+  background-color: #3a2a1a;
+  background-image: var(--tex-jabuti);
+  background-size: 260px;
+  border-left: var(--border-thick);
+  display: grid;
+  place-items: center;
+  padding: 40px;
+}
+
+.pattern-badge-large {
+  padding: 24px 30px;
+  background: var(--caution-yellow);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transform: rotate(-3deg);
+}
+
+.badge-tag {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 32px;
+  text-transform: uppercase;
+}
+
+.badge-sub {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   FAIXA DE REGRAS DO PARQUE
+   ========================================================================== */
+.rules-banner {
+  background: var(--caution-yellow);
+  border-block: var(--border-thick);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.rules-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+  align-items: center;
+  font-family: var(--f-display);
+  font-size: clamp(20px, 2.2vw, 28px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rules-marquee span {
+  padding: 4px 10px;
+}
+
+.rules-marquee i {
+  font-family: var(--f-sans);
+  font-style: normal;
+  color: var(--rust);
+  font-size: 0.7em;
+  padding-inline: 26px;
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.footer__pattern-bar {
+  height: 48px;
+  border-bottom: var(--border-thick);
+  background-color: #d9781f;
+  background-image: var(--tex-tigre);
+  background-size: 240px;
+}
+
+.footer__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 68px var(--gutter) 36px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer__title {
+  font-family: var(--f-display);
+  font-size: 44px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.footer__subtitle {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--onca-gold);
+  margin-bottom: 16px;
+}
+
+.footer__lead {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(244, 237, 225, 0.75);
+  max-width: 44ch;
+}
+
+.footer__col h4 {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--onca-gold);
+  margin-bottom: 16px;
+}
+
+.footer__col p, .footer__address {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(244, 237, 225, 0.85);
+  font-style: normal;
+}
+
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__nav a {
+  font-size: 14px;
+  color: rgba(244, 237, 225, 0.85);
+  transition: color 0.15s ease;
+}
+
+.footer__nav a:hover {
+  color: var(--onca-gold);
+}
+
+.footer__bottom {
+  grid-column: 1 / -1;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-size: 12.5px;
+  color: rgba(244, 237, 225, 0.65);
+}
+
+.footer__credits {
+  max-width: 65ch;
+  line-height: 1.5;
+}
+
+.footer__credits strong {
+  color: var(--paper);
+}
+
+/* ==========================================================================
+   LIGHTBOX MODAL (FOTO AMPLIADA)
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  place-items: center;
+  padding: 20px;
+}
+
+.lightbox.is-open {
+  display: grid;
+}
+
+.lightbox__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 21, 18, 0.88);
+  backdrop-filter: blur(8px);
+}
+
+.lightbox__container {
+  position: relative;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-lg);
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  background: var(--paper-card);
+  border: var(--border-thick);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+}
+
+.lightbox__media {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__media img {
+  width: 100%;
+  height: 100%;
+  max-height: 540px;
+  object-fit: cover;
+}
+
+.lightbox__details {
+  padding: 34px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox__badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: #fff;
+  margin-bottom: 10px;
+  width: max-content;
+}
+
+.lightbox__details h3 {
+  font-family: var(--f-display);
+  font-size: 40px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lightbox__sci {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-light);
+  margin: 6px 0 16px;
+}
+
+.lightbox__details p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-light);
+  margin-bottom: 24px;
+}
+
+.lightbox__swatch-wrap {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: var(--border-thin);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lightbox__swatch-wrap span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lightbox__swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: var(--border-thick);
+  background-color: var(--onca-gold);
+  background-size: 90px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 1120px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .hero__visual {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 520px;
+  }
+  .sec-head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .sec-head__desc {
+    max-width: 65ch;
+  }
+  .bastidores__inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .bastidores__main-photo {
+    height: 400px;
+  }
+  .visit-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .visit-card--map {
+    grid-column: 1 / -1;
+  }
+  .tips-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .school-banner {
+    grid-template-columns: 1fr;
+  }
+  .school-banner__visual {
+    border-left: 0;
+    border-top: var(--border-thick);
+    min-height: 220px;
+  }
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 20px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--paper-card);
+    border-bottom: var(--border-thick);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px var(--gutter);
+    gap: 18px;
+    display: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav.is-open {
+    display: flex;
+  }
+
+  .nav a:not(.btn) {
+    font-family: var(--f-display);
+    font-size: 28px;
+    text-transform: uppercase;
+    padding: 4px 0;
+  }
+
+  .hero {
+    padding-top: 36px;
+  }
+
+  .animal-card--featured {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-item--wide {
+    grid-column: auto;
+  }
+
+  .visit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .school-topics {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox__container {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox__media img {
+    max-height: 300px;
+  }
+}
